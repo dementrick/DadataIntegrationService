@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+dadata:
+  apiKey: 5f055fc1a6e409b5247df19410bbee12e1f4c228
+  personUrl: http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio
+  addressUrl: http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address
+  connectTimeout: 10000
+  readTimeout: 15000
