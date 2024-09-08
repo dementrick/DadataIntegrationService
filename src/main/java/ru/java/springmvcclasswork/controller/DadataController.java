@@ -2,6 +2,7 @@ package ru.java.springmvcclasswork.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.java.springmvcclasswork.modelAddress.Address;
 import ru.java.springmvcclasswork.modelPerson.Person;
@@ -24,6 +25,7 @@ public class DadataController {
 
 
     @PostMapping("/person")
+    @PreAuthorize("hasAuthority('ROLE_USER') || hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Person>> cluesPerson(@RequestBody PersonRequest request){
         try {
             List<Person> personList = dadataService.getForFullName(request);
@@ -35,6 +37,7 @@ public class DadataController {
     }
 
     @GetMapping("/address")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Address>> cluesAddress(@RequestParam String query, @RequestParam(required = false, defaultValue = "10") int count) {
         try {
             List<Address> addresses = dadataService.getForAddress(query, count);
@@ -42,5 +45,9 @@ public class DadataController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+    @GetMapping("/welcome")
+    public String home(){
+        return "Welcome";
     }
 }
